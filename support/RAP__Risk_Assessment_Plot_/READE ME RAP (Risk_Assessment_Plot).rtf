@@ -1,0 +1,97 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1138\cocoasubrtf470
+{\fonttbl\f0\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red34\green139\blue34;}
+\paperw16840\paperh11900\margl1440\margr1440\vieww16340\viewh13020\viewkind0
+\deftab720
+\pard\pardeftab720
+
+\f0\fs24 \cf2 % *********************  Risk_Assessment_Plot  ****************************\cf0 \
+\cf2 %   (c) John W Pickering, August 2011\cf0 \
+\cf2 %     All rights reserved.\cf0 \
+\cf2 %     Christchurch Kidney Research Group\cf0 \
+\cf2 %     University of Otago Christchurch\cf0 \
+\cf2 %     New Zealand\cf0 \
+\cf2 %\cf0 \
+\cf2 %   Last update:  15 August 2012\cf0 \
+\cf2 %\cf0 \
+\cf2 %   Redistribution and use in source and binary forms, with or without \cf0 \
+\cf2 %   modification, are permitted provided that the following conditions are met:\cf0 \
+\cf2 %\cf0 \
+\cf2 %   * Redistributions of source code must retain the above copyright \cf0 \
+\cf2 %     notice, this list of conditions and the following disclaimer.\cf0 \
+\cf2 %   * Redistributions in binary form must reproduce the above copyright \cf0 \
+\cf2 %     notice, this list of conditions and the following disclaimer in \cf0 \
+\cf2 %     the documentation and/or other materials provided with the distribution\cf0 \
+\cf2 %      \cf0 \
+\cf2 % THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" \cf0 \
+\cf2 % AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE \cf0 \
+\cf2 % IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE \cf0 \
+\cf2 % ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE \cf0 \
+\cf2 % LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR \cf0 \
+\cf2 % CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF \cf0 \
+\cf2 % SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS \cf0 \
+\cf2 % INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN \cf0 \
+\cf2 % CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) \cf0 \
+\cf2 % ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE \cf0 \
+\cf2 % POSSIBILITY OF SUCH DAMAGE.\cf0 \
+\cf2 % \cf0 \
+\cf2 % Attribution to John Pickering.  Publications to reference\cf0 \
+\cf2 %  Pickering JW, Endre ZH.\cf0 \
+\cf2 %   New Metrics for Assessing Diagnostic Potential of Candidate Biomarkers.\cf0 \
+\cf2 %   Clin J Am Soc Nephro 2012, On line ahead of print, doi:10.2215/CJN.09590911;\cf0 \
+\cf2 %   http://cjasn.asnjournals.org/content/early/2012/05/24/CJN.09590911.full.pdf+html\cf0 \
+\cf2 %    (Published Open Access)\cf0 \
+\cf2 %\cf0 \
+\cf2 %   PLEASE NOTE:  The Risk Assessment Plots are based on a combination of several\cf0 \
+\cf2 %                 classification plots (see ref 4) and were first described and\cf0 \
+\cf2 %                 published in the above publication. That publication is\cf0 \
+\cf2 %                 also an introduction to the appropriate application of \cf0 \
+\cf2 %                 the NRI and IDI\cf0 \
+\cf2 %                 The NRI and IDI were first described in the two Pencina\cf0 \
+\cf2 %                 publications below\cf0 \
+\cf2 %\cf0 \
+\cf2 %  REFERENCES\cf0 \
+\cf2 %  1. Pencina, MJ et al.\cf0 \
+\cf2 %   Evaluating the added predictive ability of a new marker: From area under\cf0 \
+\cf2 %   the ROC curve to reclassification and beyond.\cf0 \
+\cf2 %   Stat Med 2008; 27:157-172. doi:10.1002/sim.2929\cf0 \
+\cf2 %  2. Pencina et al.\cf0 \
+\cf2 %   Extensions of net reclassification improvement calculations to measure\cf0 \
+\cf2 %   usefulness of new biomarkers.\cf0 \
+\cf2 %   Stat Ned 2011; 30:11-21. doi:10.1002/sim.4085\cf0 \
+\cf2 %  3. DeLong E, DeLong D, Clarke-Pearson D. \cf0 \
+\cf2 %   Comparing the areas under 2 or more correlated receiver operating \cf0 \
+\cf2 %   characteristic curves - a nonparametric approach. \cf0 \
+\cf2 %   Biometrics 1988;44(3):837?45.\cf0 \
+\cf2 %  4.Pepe MS, Feng Z, Huang Y, et al. \cf0 \
+\cf2 %   Integrating the predictiveness of a marker with its performance as a classifier.\cf0 \
+\cf2 %   Am J Epidemiol 2008;167(3):362?8. \cf0 \
+\cf2 % *************************************************************************\cf0 \
+\
+\
+This function and the associated packages take as input the variables that determine risk for a particular outcome and an additional variable (the reference variables).  The aim is to determine whether that additional variable adds value to the model described by the reference variable.  An example may be a disease where the risk is Age, Sex, Previous history of Cardiac Arrest.  The additional variable may be a blood biomarker concentration.\
+\
+The outputs are plots of the risk of the event amongst those who have the event verse sensitivity for both those with and without the event; and plots of the risk of the event amongst those who do not have the event verse 1 - specificity for both those with and without the event.  Several summary statistics are produced including the Integrated Discrimination Improvement, the Net Reclassification Improvement, Integrated Sensitivity, Integrated 1-Specificity, and difference in Area under the Receiver Operator Characteristic Curve.\
+\
+Risk_Assessment_Plot utilizes:\
+\
+NRI.m  A function to calculate the various metrics\
+mutlti_category_NRI_ci.m  Calculates the two category NRI with 95% confidence interval using a bootstrapping method\
+Category_Free_NRI_ci.m  Calculates the Category Free NRI and other metrics with a 95% confidence interval using a bootstrapping method\
+\
+I've set the number of iterations in the bootstrapping method as 2000.  This can be changed of course.\
+I've placed a 'tic' 'toc' to show that each of the bootstrappings (is that a verb?) is happening.  \
+\
+For Risk_Assessment_Plot to run all the associated m files must be in the same path.\
+\
+Note 1: most of the attached files can be run separately.\
+\
+Note 2: many warning messages may be automatically generated as it cycles through the model (using glmfit) many times for bootstrapping. \
+\
+Finally, my programming skills began with basic about 360 moons ago and they atrophied with a long absence.  I no doubt they code could be much more efficient - I'd love to see that.  It is slow because of the bootstrapping I believe.\
+\
+Regards\
+\
+John W Pickering\
+17 July 2012\
+}
