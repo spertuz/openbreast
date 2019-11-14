@@ -3,16 +3,14 @@
 clear, clc
 
 % read reference image:
-srcdir = fileparts(mfilename('fullpath'));
-impath = [srcdir,'/../samples/img_143_195_1_LO.tif'];
-im = imread(impath);        %read image
-im = im2double(im);         %convert to double
-im = imresize(im, .25);     %re-size for speed up
-isMLO = true;               %true for MLO view
-isFFDM = true;              %true only for FFDM images
+srcdir  = fileparts(mfilename('fullpath'));
+impath  = [srcdir,'/../samples/cont_522_RMLO_0.dcm'];
+info    = getinfo(impath);
+im      = ffdmRead(impath, info);
+im      = imresize(im, info.psize/0.4);
 
 % Segment breast boundary and chest wall:
-[mask, contour, cwall] = segBreast(im, isMLO, isFFDM);
+[mask, contour, cwall] = segBreast(im, info.ismlo);
 
 % Detect maximum squared ROI:
 mask_SQ = sqmax(mask);
@@ -22,7 +20,7 @@ mask_SQ = sqmax(mask);
 [~, ~, mask_multi] = xySampling(im, x, y, 32);
 
 % Detect retroareolar region
-rpoints = refpoints(contour, cwall, isMLO);
+rpoints = refpoints(contour, cwall, info.ismlo);
 map = stmap(contour, rpoints);
 mask_RA = st2mask(map, [.1, .5], [.1 .9]);
 

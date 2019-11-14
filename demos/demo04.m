@@ -1,20 +1,15 @@
 % Feature extraction of FFDM images
 clear, clc
 
-clear, clc
-
 % read reference image:
-srcdir = fileparts(mfilename('fullpath'));
-impath = [srcdir,'/../samples/img_143_195_1_LO.tif'];
-im = imread(impath);        %read image
-im = im2double(im);         %convert to double
-imn = imresize(im, .25);     %re-size for speed up
-isMLO = true;               %true for MLO view
-isFFDM = true;              %true only for FFDM images
+srcdir  = fileparts(mfilename('fullpath'));
+impath  = [srcdir,'/../samples/cont_522_RMLO_0.dcm'];
+info    = getinfo(impath);
+imn     = ffdmRead(impath, info);
+imn     = imresize(imn, info.psize/0.4);
 
 % breast segmentation
-mask = segBreast(imn, isMLO, isFFDM);
-mask = imresize(mask, size(im));
+mask = segBreast(imn, info.ismlo);
 
 % feature extraction
 features = {'imin', 'imax', 'iavg', 'ient', 'istd', 'ip05', 'ip95', 'iba1', 'iba2', 'ip30', 'ip70', 'iske', 'ikur','iran',...
@@ -22,5 +17,14 @@ features = {'imin', 'imax', 'iavg', 'ient', 'istd', 'ip05', 'ip95', 'iba1', 'iba
 'rsre', 'rlre', 'rgln', 'rrpe', 'rrln', 'rlgr', 'rhgr',...
 'sgra', 'slap', 'swas', 'swav', 'swar', 'stev'};
 
-x = xfeatures(im, features, mask);
-disp(table(features(:), x(:), 'variablenames',{'Feature','Value'}))
+x = xfeatures(imn, features, mask);
+
+%feature extraction with different sampling, normalization and scales:
+norm    = {'none','zscore'};
+samp    = {'full', 'multi'};
+scal    = {'1.0'};
+res     = 0.1;
+[xf, info] = ffdmFeatures(impath, res, scal, norm, samp);
+
+fprintf('Extrated features:\n')
+disp(features(:));

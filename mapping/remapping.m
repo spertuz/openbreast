@@ -62,6 +62,5 @@ Ir(index2) = im(index1);
 isvalid = st2mask(RMAPP, [0,1], [0,1]);
 
 if RMAPP.flip
-    Ir = fliplr(Ir);
-    isvalid = fliplr(isvalid);
+    Ir = fliplr(Ir);    
 end

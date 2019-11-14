@@ -14,6 +14,7 @@ addpath(fullfile(root, 'segmentation'))
 addpath(fullfile(root, 'misc'))
 addpath(fullfile(root, 'mapping'))
 addpath(fullfile(root, 'features'))
+addpath(fullfile(root, 'density'))
 addpath(genpath(fullfile(root, 'support')))
 
 fprintf('OpenBreast v0.1 is ready\n')

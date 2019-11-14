@@ -13,6 +13,10 @@ function showmap(im, MAPP)
 M = 30;             %No. of points in Y-grid
 N = 30;             %No. of points in X-grid
 
+if MAPP.flip
+    im = fliplr(im);
+end
+
 imshow(mat2gray(im)), hold on
 
 s = linspace(0, 1);
