@@ -15,7 +15,7 @@ To get started first run setup.m to configure Openbreast. Then run the following
 * demo04 		Feature extraction on FFDM images
 * demo05 		Breast density segmentation
 
-For further details, please refer to: https://sites.google.com/view/cvia/openbreast
+For further details, please refer to: https://sites.google.com/view/cvia/openbreast. OpenBreast is also available at FileExchange [![View OpenBreast on File Exchange](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://www.mathworks.com/matlabcentral/fileexchange/71615-openbreast)
 
 [1] S. Pertuz et al., Open Framework for Mammography-based Breast Cancer Risk Assessment, IEEE-EMBS International Conference on Biomedical and Health Informatics, 2019.
 
