@@ -23,7 +23,8 @@ if iscell(srcpath)
     end
     return
 end
-
+srcpath = strrep(srcpath,'/', '\');
+srcpath = strrep(srcpath, '\', filesep);
 fpath = [prefix, filesep, srcpath(no:end)];
 [srcdir, fname, ~] = fileparts(fpath);
 fpath = [srcdir, filesep, fname, ext];

@@ -17,20 +17,29 @@ function model = rmodel(x_train, y_train)
 % S. Pertuz
 % Feb 05/2018
 
-
-% standardize features:
-model.mu = mean(x_train);
-model.std = std(x_train);
-x_train = (x_train-model.mu)./model.std;
-
-% feature selection:
-[~,~,~, model.select] = stepwisefit(x_train, y_train, 'display', 'off');
-
-% logistic regression (fit):
 warning off
-model.weights = glmfit(x_train, y_train, 'binomial', 'link', 'logit');
+model.lr = fitglm(x_train, y_train, 'linear',...
+    'distribution', 'binomial',...
+    'link', 'logit');
 warning on
 
-% logistic regression (eval):
-model.scores = glmval(model.weights, x_train, 'logit');
-model.class = y_train;    
+model.class = y_train;
+model.scores = predict(model.lr, x_train);
+
+
+% % standardize features:
+% model.mu = mean(x_train);
+% model.std = std(x_train);
+% x_train = (x_train-model.mu)./model.std;
+% 
+% % feature selection:
+% [~,~,~, model.select] = stepwisefit(x_train, y_train, 'display', 'off');
+% 
+% % logistic regression (fit):
+% warning off
+% model.weights = glmfit(x_train, y_train, 'binomial', 'link', 'logit');
+% warning on
+% 
+% % logistic regression (eval):
+% model.scores = glmval(model.weights, x_train, 'logit');
+% model.class = y_train;    

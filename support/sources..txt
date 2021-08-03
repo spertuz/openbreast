@@ -5,3 +5,6 @@ RAP_Risk_Assessment_Plot_
 Matlab toolbox for comparing ROCs using DeLong's,
 https://www.mathworks.com/matlabcentral/fileexchange/37544-risk-assessment-plots?focused=5243259&tab=function
 
+FSLib_v5.1_2017
+Feature selection library
+https://se.mathworks.com/matlabcentral/fileexchange/56937-feature-selection-library

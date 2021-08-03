@@ -63,7 +63,31 @@ elist = unique(imdata.ethnicity(:));
 e_class = zeros(length(elist), 1);
 fprintf('Ethnicities:\n')
 for n = 1:length(elist)
-    e_class(n) = input(sprintf('%s: ', elist{n}));
+    switch lower(elist{n})
+        case 'asian subcontinent'
+            e_class(n) = 1;
+        case 'european'
+            e_class(n) = 2;
+        case 'hispanic'
+            e_class(n) = 3;
+        case 'missing'
+            e_class(n) = 4;
+        case 'southeast asian'
+            e_class(n) = 5;
+        case 'south-east asian'
+            e_class(n) = 5;
+        case 'african'
+            e_class(n) = 6;
+        case '1:white'
+            e_class(n) = 7;
+        case '2:black'
+            e_class(n) = 7;
+        case '4:asian'
+            e_class(n) = 7;
+        otherwise
+            e_class(n) = 4;
+    end 
+    fprintf('%s: %d\n',elist{n},e_class(n))
 end
 
 %Manufacturer list
@@ -71,16 +95,50 @@ mlist = unique(imdata.vendor(:));
 m_class = zeros(length(mlist), 1);
 fprintf('\nManufacturers:\n')
 for n = 1:length(mlist)
-    m_class(n) = input(sprintf('%s: ', mlist{n}));
+    switch lower(mlist{n})
+        case 'agfa'
+            m_class(n) = 1;
+        case 'fujifilm corporation'
+            m_class(n) = 2;
+        case 'hologic, inc.'
+            m_class(n) = 3;
+        case 'hologic'
+            m_class(n) = 3;
+        case 'konica minolta'
+            m_class(n) = 4;
+        case 'philips digital mammography sweden ab'
+            m_class(n) = 5;
+        case 'siemens'
+            m_class(n) = 6;
+        case 'sectra imtec ab'
+            m_class(n) = 7;
+        case 'ge'
+            m_class(n) = 8;
+    end
+    fprintf('%s: %d\n',mlist{n},m_class(n))
 end
 
 % Diagnosis list
 if tflag
     slist = unique(imdata.class(:));
     s_class = zeros(length(slist), 1);
-    fprintf('\nDianosis:\n')
+    fprintf('\nDiagnosis:\n')
     for n = 1:length(slist)
-        s_class(n) = input(sprintf('%s: ', slist{n}));
+        switch lower(slist{n})
+            case 'control'
+                s_class(n) = 0;
+            case 'invasive case'
+                s_class(n) = 1;
+            case 'unknown invasiveness'
+                s_class(n) = 1;
+            case 'case: unknown invasiveness';
+                s_class(n) = 1;
+            case 'in-situ case'
+                s_class(n) = 2;
+            case 'in situ case'
+                s_class(n) = 2;                   
+        end
+        fprintf('%s: %d\n',slist{n},s_class(n))
     end
 end
 

@@ -25,7 +25,9 @@ title('ST map')
 
 % Perform inverse mapping
 subplot(1,3,3)
+tic
 [imr, isvalid] = imapping(st, map);
+toc
 showseg(imr, isvalid)
 title('Inverse ST map')
 

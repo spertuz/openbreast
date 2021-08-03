@@ -24,7 +24,7 @@ norm    = {'none','zscore'};
 samp    = {'full', 'multi'};
 scal    = {'1.0'};
 res     = 0.1;
+tic
 [xf, info] = ffdmFeatures(impath, res, scal, norm, samp);
-
-fprintf('Extrated features:\n')
-disp(features(:));
+t = toc;
+fprintf('%d features in %f seconds\n',length(info.fnames), t)

@@ -33,7 +33,7 @@ xs = smooth(interp1(xs, linspace(1, n, npts), 'pchip'));
 ys = smooth(interp1(ys, linspace(1, n, npts), 'pchip'));
 
 % Crop contour by curvature analysis
-[xc, yc, i] = cropContour(xs, ys, K_th);
+[xc, yc, ycut] = cropContour(xs, ys, K_th);
 
 if ~cflag
     contour.x = xs(:);
@@ -44,11 +44,11 @@ else
     contour.y = yc(:);
 end
 
-contour.ycut = ceil(contour.y(i))+1;
+contour.ycut = ycut;
 contour.size = size(mask);
 
 end
-function [xc, yc, i] = cropContour(xs, ys, K_th, im)
+function [xc, yc, ycut] = cropContour(xs, ys, K_th, im)
 % Crop breast contour using curvature thresholding
 % Sintax:
 %     [xc, yc] = cropContour(xs, ys, C_th)
@@ -82,8 +82,11 @@ k = (dx1.*dy2 - dy1.*dx2)./((dx1.^2 + dy1.^2).^(1.5));
 [kmin, i] = min(k);
 
 if (abs(kmin)> K_th)&& (xs(i)<0.4*max(xs))&&(ys(i)>0.5*max(ys))
+    ycut = floor(ys(i));
     xs(i+1:end) = [];
     ys(i+1:end) = [];
+else
+    ycut = floor(max(ys));
 end    
 
 xc = xs;

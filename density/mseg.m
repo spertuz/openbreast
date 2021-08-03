@@ -1,7 +1,7 @@
 function [seg, pd, mask] = mseg(im, mask, pixel_size)
 % Morphological PD estimation
 % Sintax:
-%     [seg, pd, mask, im] = mseg(im, pixel_size)
+%     [seg, pd, mask, im] = mseg(im, mask, pixel_size)
 % Inputs:
 %     im,           input image
 %     mask,         breast mask

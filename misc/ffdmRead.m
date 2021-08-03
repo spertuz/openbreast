@@ -32,7 +32,7 @@ if info.israw
     im(im<gmin) = gmin;    
     im(im>gmax) = gmax;
     imn = log(im);
-    imn = (max(imn(:)) - imn).^2;
+    imn = (max(gmax) - imn).^2;
     imn = mat2gray(imn);
 elseif is_negative
     gmax = max(im(:));

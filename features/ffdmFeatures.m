@@ -67,7 +67,7 @@ end
 no_feats    = length(flist)*length(scales)*length(sampl)*length(normal);
 
 %breast mask
-[mask, contour, cwall] = segBreast(imresize(mat2gray(imn),1/8), image_info.ismlo);
+[mask, contour, cwall] = segBreast(imresize(mat2gray(imn),0.25), image_info.ismlo);
 
 %re-scale if necessary
 im      = imresize(im, image_info.psize/res);

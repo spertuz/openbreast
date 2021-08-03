@@ -13,7 +13,7 @@ function f = features_GLCM(im, flist, mask, par)
 
 % Parameters for GLCM %%%%%%%%
 if nargin<4
-    par.length = 10; % by Hai; See the paper: Parenchymal texture analysis in digital mammography: A fully automated pipeline for breast cancer risk assessment
+    par.length = 1;    
     par.nlevels = 128;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +28,7 @@ offset = par.length*[0 1;-1 1;-1 0;-1 -1];
 
 warning('off','Images:graycomatrix:scaledImageContainsNan');
 g = graycomatrix(im, 'Offset', offset, 'NumLevels', par.nlevels,...
-    'Symmetric', false, 'GrayLimits', [min(im(mask)), max(im(mask))]); %by Hai, change 'Symmetric'=true to false
+    'Symmetric', true, 'GrayLimits', [min(im(mask)), max(im(mask))]);
 warning('on','Images:graycomatrix:scaledImageContainsNan');
 
 for n = 1:length(flist)

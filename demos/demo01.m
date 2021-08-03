@@ -13,8 +13,10 @@ im = ffdmRead(impath, info);
 % standardize size to 0.4mm/pixel
 im = imresize(im, info.psize/0.4);
 
+tic
 %segment boundary and chest wall:
 [mask, contour, cwall] = segBreast(im, info.ismlo);
+toc
 
 %display result (image is flipped!)
 figure

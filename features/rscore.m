@@ -1,5 +1,5 @@
-function r = rscore(x, model, dflag)
-% Compute risk score from LR model
+function r = rscore(impath, model, dflag)
+% Compute risk score of mammogram
 % Sintax:
 %     r = rscore(x, model)
 %     r = rscore(x, model, dflag)
@@ -21,9 +21,45 @@ function r = rscore(x, model, dflag)
 if nargin<3
     dflag = false;
 end
+tic
+%Feature extraction
+% parameters:
+res     = 0.1; %resolution 0.1mm/pixel
+flist = {'imin', 'imax', 'iavg', 'ient', 'istd', 'ip05', 'ip95', 'iba1', 'iba2', 'ip30', 'ip70', 'iske', 'ikur','iran',...
+'cene', 'ccor', 'ccon', 'chom', 'cent',...
+'rsre', 'rlre', 'rgln', 'rrpe', 'rrln', 'rlgr', 'rhgr',...
+'sgra', 'slap', 'swas', 'swav', 'swar', 'stev', 'fdim'};
 
-x = (x-model.mu)./model.std;
-r = glmval(model.weights, x, 'logit');
+info = getinfo(impath);
+[imn, im] = ffdmRead(impath, info);
+mask  = segBreast(imresize(imn, .25), info.ismlo);
+im = imresize(im, info.psize/res);
+f = xfeatures(im, flist, mask, res);
+        
+%retrieve sensor info:
+if strcmpi(info.target, 'MO')&& strcmpi(info.filter, 'RH')
+    sensor = 0;
+elseif strcmpi(info.target, 'TU')&& strcmpi(info.filter, 'AL')
+    sensor = 1;
+elseif strcmpi(info.target, 'RH')&& strcmpi(info.filter, 'RH')
+    sensor = 2;
+elseif strcmpi(info.target, 'RH')&& strcmpi(info.filter, 'SI')
+    sensor = 3;
+else
+    error('target-filter not found!')
+end
+        
+%add imaging parameters:
+x = [f, info.KVP, info.H, info.cforce, sensor];
+
+%Predict risk score
+r = predict(model.lr, x);
+t = toc;
+[~, fname] = fileparts(impath);
+fprintf('File  : %s\n', fname)
+fprintf('Score : %1.3f\n', r)
+fprintf('Age   : %s\n', info.age)
+fprintf('Time  : %1.3f\n', t)
 
 %Display risk score:
 if dflag&&length(r)==1
@@ -33,8 +69,20 @@ if dflag&&length(r)==1
     lo_color    = [0 1 0];
     alpha       = 0.3;
     
-   
-   %estimate density of low-risk:
+    figure, 
+    subplot(121)
+    im = mat2gray(imresize(im, .25));
+    imshow(im);
+    
+    str{1} = sprintf('View    : %s%s',info.side, info.view);
+    str{2} = sprintf('Age     : %s', info.age);
+    str{3} = sprintf('R score : %1.2f', r);
+    str{4} = 'Status: HIGH risk';
+    text(30,size(im,1)-30,str(:), 'color','g')
+    
+    subplot(122)
+    
+    %estimate density of low-risk:
     x0 = model.scores(~model.class);
     [density, value] = ksdensity(x0, 'bandwidth', bandwidth);
     density = density(value>=0&value<=1);

@@ -48,9 +48,9 @@ else
 end
 
 mask = mask&cmask;
-mask(1,:) = false;
-mask(:,1) = false;
-mask(end,:) = false;
+% mask(1,:) = false;
+% mask(:,1) = false;
+% mask(end,:) = false;
 
 %flip back mask if necessary
 if isflipped

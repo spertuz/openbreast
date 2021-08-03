@@ -40,7 +40,9 @@ if ~exist(dicom_image, 'file')
     return
 end
 
-full_info = dicominfo(dicom_image, 'UseDictionaryVR', true);
+% full_info = dicominfo(dicom_image, 'UseDictionaryVR', true);
+warning off
+full_info = dicominfo(dicom_image);
 
 %ISTOMO
 if ~isfield(full_info, 'SeriesDescription')||isempty(strfind(full_info.SeriesDescription, 'Tomosynthesis'))

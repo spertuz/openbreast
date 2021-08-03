@@ -21,7 +21,7 @@ function [f, r, mask] = xySampling(im, x, y, wsize, dispflag)
 
 dispflag = (nargin>4);
 
-mask = false(size(im));
+mask = zeros(size(im));
 delta = floor(0.5*wsize);
 nrois = length(x);
 if nargout<2&&~dispflag
@@ -33,7 +33,7 @@ else
     for n = 1:nrois        
         r{n} = im(y(n)-delta: y(n)+delta, x(n)-delta:x(n)+delta);        
         f(n) = im(y(n), x(n));
-        mask(y(n)-delta: y(n)+delta, x(n)-delta:x(n)+delta) = true;
+        mask(y(n)-delta: y(n)+delta, x(n)-delta:x(n)+delta) = n;
     end
 end
 

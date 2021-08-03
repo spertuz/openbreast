@@ -46,4 +46,4 @@ isvalid = st2mask(mapp, [0,1], [0,1]);
 
 if mapp.flip, im = fliplr(im);
 end
-im(~isvalid) = 0;
+im(~isvalid|isnan(im)) = 0;

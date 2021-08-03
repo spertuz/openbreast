@@ -58,39 +58,39 @@ for n = 1:length(flist)
         case 'stev'
             g = imgradient(im);
             f(n) = std(g(mask));
-		case 'suni' %uniformity
-			fx = imgradient(im);
-			h = hist(fx(mask), 256);
-			h = h/sum(h);
-			f(n) = sum(h.^2);
-		case 'ssmo' %smoothness
-			fx = imgradient(im);
-			f(n) = 1/(1+ std(fx(mask))^2);
-		case 'sske' %skewness
-			fx = imgradient(im);
-			f(n) = skewness(fx(mask));
-		case 'sent' %entropy
-			fx = imgradient(im);
-			c = hist(fx(mask), 256);
-            p = c/sum(c);
-            f(n) = -sum(p(p~=0).*log2(p(p~=0)));
-		case 'sfdi' %fractal dimension
-			psize = 0.1; %pixel size in mm
-			epsilon = psize*[1 2 4 8 16 32 64 128]';
-			scale = psize*(1./epsilon);
-			% Find surface area
-			A = zeros(length(epsilon), 1);
-			for n = 1:length(epsilon)
-				im_e = imresize(im, scale(n));
-				mask_e = imresize(mask, scale(n));
-				diff_x = imfilter(im_e, [1, -1]);
-				diff_y = imfilter(im_e, [1; -1]);
-				Ax = abs(diff_x(mask_e(:))) + abs(diff_y(mask_e(:)));
-				A(n) = epsilon(n)^2 + epsilon(n)*sum(Ax(:));
-			end
-			%Find slope of log(A) vs log(e):
-			p = polyfit(log(epsilon), log(A), 1);
-			f(n) = -p(1);
+	case 'suni' %uniformity
+		fx = imgradient(im);
+		h = hist(fx(mask), 256);
+		h = h/sum(h);
+		f(n) = sum(h.^2);
+	case 'ssmo' %smoothness
+		fx = imgradient(im);
+		f(n) = 1/(1+ std(fx(mask))^2);
+	case 'sske' %skewness
+		fx = imgradient(im);
+		f(n) = skewness(fx(mask));
+	case 'sent' %entropy
+		fx = imgradient(im);
+		c = hist(fx(mask), 256);
+        	p = c/sum(c);
+            	f(n) = -sum(p(p~=0).*log2(p(p~=0)));
+	case 'sfdi' %fractal dimension
+		psize = 0.1; %pixel size in mm
+		epsilon = psize*[1 2 4 8 16 32 64 128]';
+		scale = psize*(1./epsilon);
+		% Find surface area
+		A = zeros(length(epsilon), 1);
+		for n = 1:length(epsilon)
+			im_e = imresize(im, scale(n));
+			mask_e = imresize(mask, scale(n));
+			diff_x = imfilter(im_e, [1, -1]);
+			diff_y = imfilter(im_e, [1; -1]);
+			Ax = abs(diff_x(mask_e(:))) + abs(diff_y(mask_e(:)));
+			A(n) = epsilon(n)^2 + epsilon(n)*sum(Ax(:));
+		end
+		%Find slope of log(A) vs log(e):
+		p = polyfit(log(epsilon), log(A), 1);
+		f(n) = -p(1);
         otherwise            
             error('unknown method %s', flist{n})
     end

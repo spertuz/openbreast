@@ -166,12 +166,13 @@ prob=1-chi2cdf(x2,1);
 
 diff_plus95CI=diff+1.96*sqrt(LSLdash);
 diff_minus95CI=diff-1.96*sqrt(LSLdash);
-title={'AUC difference'};
-AUC1string=  [num2str(Area(1),'%11.2g'),' (',num2str(CIMin95(1),'%11.2g'),' to ',num2str(CIPlus95(1),'%11.2g'),')'];
-AUC2string=  [num2str(Area(2),'%11.2g'),' (',num2str(CIMin95(2),'%11.2g'),' to ',num2str(CIPlus95(2),'%11.2g'),')'];
-AUCdiffstring=  [num2str(diff,'%11.2g'),' (',num2str(diff_minus95CI,'%11.2g'),' to ',num2str(diff_plus95CI,'%11.2g'),')'];
-temp={title,AUC1string,AUC2string,AUCdiffstring,prob};
-AUC_compare=temp;
+% title='AUC difference';
+% AUC1string=  [num2str(Area(1),'%11.3g'),' (',num2str(CIMin95(1),'%11.3g'),' to ',num2str(CIPlus95(1),'%11.3g'),')'];
+% AUC2string=  [num2str(Area(2),'%11.3g'),' (',num2str(CIMin95(2),'%11.3g'),' to ',num2str(CIPlus95(2),'%11.3g'),')'];
+% AUCdiffstring=  [num2str(diff,'%11.3g'),' (',num2str(diff_minus95CI,'%11.3g'),' to ',num2str(diff_plus95CI,'%11.3g'),')'];
+% temp={title,AUC1string,AUC2string,AUCdiffstring,prob};
+% AUC_compare=temp;
+AUC_compare = {[Area(1), CIMin95(1), CIPlus95(1)], [Area(2), CIMin95(2), CIPlus95(2)], [diff, diff_minus95CI, diff_plus95CI], prob};
 end
 
 

@@ -17,8 +17,8 @@ function [si, ti] = xy2st(x, y, MAPP, sc)
 if nargin<4, sc = 1;
 end
 
-NS = MAPP.Size(2);
-NT = MAPP.Size(1);
+NS = MAPP.size(2);
+NT = MAPP.size(1);
 s = linspace(0, 1, NS);
 t = linspace(0, 1, NT);
 
@@ -31,8 +31,9 @@ X = PA.*cos(theta) - PB.*sin(theta) + MAPP.x0;
 Y = PA.*sin(theta) + PB.*cos(theta) + MAPP.y0;
 
 if MAPP.flip
-    x = sc*MAPP.Size(2)-x+1;
+    x = sc*MAPP.size(2)-x+1;
 end
-
+warning off
 si = griddata(X, Y, S, x/sc, y/sc);
 ti = griddata(X, Y, T, x/sc, y/sc);
+warning on
